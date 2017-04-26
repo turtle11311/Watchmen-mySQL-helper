@@ -1,0 +1,27 @@
+{
+  "name": "watchmen-mysql-helper",
+  "version": "1.0.0",
+  "description": "Watchmen query helper using node.js ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turtle11311/Watchmen-mySQL-helper.git"
+  },
+  "keywords": [
+    "mysql"
+  ],
+  "author": "TurtleBee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/turtle11311/Watchmen-mySQL-helper/issues"
+  },
+  "homepage": "https://github.com/turtle11311/Watchmen-mySQL-helper#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0"
+  }
+}
