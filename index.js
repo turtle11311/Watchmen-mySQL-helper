@@ -14,9 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 let mysql = MySQL.createPool(config.mysql_config)
 
 app.get('/heartrate/detail', (req, res) => {
-  let queryStr = `SELECT UNIX_TIMESTAMP(\
-  CONCAT(DateTime, ' ', StartTime)) - UNIX_TIMESTAMP(CONCAT(DateTime, ' ', '00:00:00')\
-  ) AS sec, Value AS val FROM Heartrate_Detail \
+  let queryStr = `SELECT TIME_TO_SEC(StartTime) AS sec, Value AS val FROM Heartrate_Detail \
     WHERE User_ID='${req.query.user}' AND DateTime='${req.query.date}' ORDER BY sec`
   mysql.query(queryStr)
     .then(rows => res.send(rows))
