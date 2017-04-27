@@ -14,18 +14,28 @@ app.use(bodyParser.urlencoded({ extended: true }))
 let mysql = MySQL.createPool(config.mysql_config)
 
 app.get('/heartrate/detail', (req, res) => {
-  let queryStr = `SELECT TIME_TO_SEC(StartTime) AS sec, Value AS val FROM Heartrate_Detail \
-    WHERE User_ID='${req.query.user}' AND DateTime='${req.query.date}' ORDER BY sec`
+  let queryStr = `SELECT TIME_TO_SEC(StartTime) AS Sec, Value AS Val FROM Heartrate_Detail \
+    WHERE User_ID='${req.query.user}' AND DateTime='${req.query.date}' ORDER BY Sec`
   mysql.query(queryStr)
     .then(rows => res.send(rows))
     .catch(err => res.send(err))
 })
 
 app.get('/heartrate/newest', (req, res) => {
-  let queryStr = `SELECT Value FROM Heartrate_Detail WHERE User_ID='${req.query.user}' \
+  let queryStr = `SELECT Value AS Val FROM Heartrate_Detail WHERE User_ID='${req.query.user}' \
   ORDER BY DateTime DESC, StartTime DESC LIMIT 1`
   mysql.query(queryStr)
-    .then(rows => res.send(rows[0] || {Value: -1}))
+    .then(rows => res.send(rows[0] || {Val: -1}))
+    .catch(err => res.send(err))
+})
+
+/* ====================== Sleep ====================== */
+
+app.get('/sleep/hourSum', (req, res) => {
+  let queryStr = `SELECT HOUR(StartTime) AS Hour, SUM(4 - Value) AS Val \
+  FROM Sleep_Detail WHERE User_ID='${req.query.user}' AND DateTime='${req.query.date}' GROUP BY HOUR(StartTime)`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows))
     .catch(err => res.send(err))
 })
 
