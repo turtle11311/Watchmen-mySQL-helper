@@ -23,5 +23,13 @@ app.get('/heartrate/detail', (req, res) => {
     .catch(err => res.send(err))
 })
 
+app.get('/heartrate/newest', (req, res) => {
+  let queryStr = `SELECT Value FROM Heartrate_Detail WHERE User_ID='${req.query.user}' \
+  ORDER BY DateTime DESC, StartTime DESC LIMIT 1`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows[0] || {Value: -1}))
+    .catch(err => res.send(err))
+})
+
 let server = http.createServer(app)
 server.listen(config.port)
