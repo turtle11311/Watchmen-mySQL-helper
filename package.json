@@ -21,6 +21,7 @@
   "homepage": "https://github.com/turtle11311/Watchmen-mySQL-helper#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "debug": "^2.6.4",
     "express": "^4.15.2",
     "mysql": "^2.13.0",
     "promise-mysql": "^3.0.1"
