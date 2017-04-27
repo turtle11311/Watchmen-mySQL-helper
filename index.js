@@ -54,7 +54,16 @@ app.get('/sleep/efficiency', (req, res) => {
     .catch(err => res.send(err))
 })
 
-
+app.get('/sleep/lastestDuration', (req, res) => {
+  let queryStr = `SELECT StartTime ,SUM(Value) AS Val FROM Summary \
+                  WHERE User_ID='${req.query.user}' AND \
+                  (ID_Activity='minutesAfterWakeup' OR ID_Activity='minutesAsleep' OR \
+                   ID_Activity='minutesAwake' OR ID_Activity='minutesToFallAsleep') \
+                   GROUP BY DateTime ORDER BY DateTime DESC LIMIT 1`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows[0] || {Val: -1}))
+    .catch(err => res.send(err))
+})
 
 let server = http.createServer(app)
 server.listen(config.port)
