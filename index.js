@@ -30,7 +30,7 @@ app.get('/heartrate/newest', (req, res) => {
 })
 
 app.get('/heartrate/average', (req, res) => {
-  let queryStr = `SELECT AVG(Value) AS Val FROM Heartrate_Detail WHERE User_ID='${req.query.user}'`
+  let queryStr = `SELECT AVG(Value) AS Val FROM uniplat.Heartrate_Detail WHERE User_ID='${req.query.user}'`
   mysql.query(queryStr)
     .then(rows => res.send(rows[0] || {Val: -1}))
     .catch(err => res.send(err))
@@ -45,6 +45,16 @@ app.get('/sleep/hourSum', (req, res) => {
     .then(rows => res.send(rows))
     .catch(err => res.send(err))
 })
+
+app.get('/sleep/efficiency', (req, res) => {
+  let queryStr = `SELECT Value AS Val FROM uniplat.Summary \
+  WHERE User_ID='${req.query.user}' AND DateTime='${req.query.date}' AND ID_Activity='efficiency'`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows))
+    .catch(err => res.send(err))
+})
+
+
 
 let server = http.createServer(app)
 server.listen(config.port)
