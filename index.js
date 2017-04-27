@@ -29,6 +29,13 @@ app.get('/heartrate/newest', (req, res) => {
     .catch(err => res.send(err))
 })
 
+app.get('/heartrate/average', (req, res) => {
+  let queryStr = `SELECT AVG(Value) AS Val FROM Heartrate_Detail WHERE User_ID='${req.query.user}'`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows[0] || {Val: -1}))
+    .catch(err => res.send(err))
+})
+
 /* ====================== Sleep ====================== */
 
 app.get('/sleep/hourSum', (req, res) => {
