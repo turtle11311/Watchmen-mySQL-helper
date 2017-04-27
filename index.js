@@ -50,7 +50,7 @@ app.get('/sleep/efficiency', (req, res) => {
   let queryStr = `SELECT Value AS Val FROM uniplat.Summary \
   WHERE User_ID='${req.query.user}' AND DateTime='${req.query.date}' AND ID_Activity='efficiency'`
   mysql.query(queryStr)
-    .then(rows => res.send(rows))
+    .then(rows => res.send(rows[0] || {Val: -1}))
     .catch(err => res.send(err))
 })
 
