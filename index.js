@@ -69,7 +69,7 @@ app.post('/authorize', (req, res) => {
   let queryStr = `SELECT User_ID FROM Watchmen_APP.Users \
                   WHERE User_ID='${req.body.user}' AND Password='${req.body.passwd}'`
   mysql.query(queryStr)
-    .then(rows => { console.log(rows); res.send(rows[0] !== undefined ? 'YES' : 'NO') })
+    .then(rows => res.send(rows[0] !== undefined ? 'YES' : 'NO'))
     .catch(err => res.send(err))
 })
 
