@@ -73,5 +73,15 @@ app.post('/authorize', (req, res) => {
     .catch(err => res.send(err))
 })
 
+app.put('/PVT/record', (req, res) => {
+  let queryStr = `INSERT INTO Watchmen_APP.PVT_History \
+                  VALUES('${req.body.user}', NOW(), \
+                          ${req.body.mean}, ${req.body.fastest10},\
+                          ${req.body.slowest10}, ${req.body.lapse});`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows))
+    .catch(err => res.send(err))
+})
+
 let server = http.createServer(app)
 server.listen(config.port)
