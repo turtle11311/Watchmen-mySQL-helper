@@ -75,7 +75,7 @@ app.post('/authorize', (req, res) => {
 
 app.put('/PVT/record', (req, res) => {
   let queryStr = `INSERT INTO Watchmen_APP.PVT_History \
-                  VALUES('${req.body.user}', NOW(), \
+                  VALUES('${req.body.user}', NOW(), NOW(),\
                           ${req.body.mean}, ${req.body.fastest10},\
                           ${req.body.slowest10}, ${req.body.lapse});`
   mysql.query(queryStr)
