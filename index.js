@@ -54,6 +54,22 @@ app.get('/sleep/efficiency', (req, res) => {
     .catch(err => res.send(err))
 })
 
+app.get('/alert', (req, res) => {
+  let queryStr = `SELECT * FROM Watchmen_APP.Alert \
+  WHERE Account='${req.query.user}' ORDER BY Date DESC LIMIT 1`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows[0]))
+    .catch(err => res.send(err))
+})
+
+app.get('/message', (req, res) => {
+  let queryStr = `SELECT * FROM Watchmen_APP.Message \
+  WHERE User_ID='${req.query.user}' ORDER BY ID DESC LIMIT 1`
+  mysql.query(queryStr)
+    .then(rows => res.send(rows[0]))
+    .catch(err => res.send(err))
+})
+
 app.get('/sleep/lastestDuration', (req, res) => {
   let queryStr = `SELECT StartTime ,SUM(Value) AS Val FROM Summary \
                   WHERE User_ID='${req.query.user}' AND 
